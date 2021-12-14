@@ -1,0 +1,15 @@
+<% @page_title ="Todo 編集"%>
+<h1 id="page_title"><%= link_to "<<", :root, id: :back_to_root %>&ensp;<%= @page_title %></h1>
+
+
+<div id="update_form">
+    <%= form_for @task do |form| %>
+        <%= form.text_field :title, placeholder: :title, :required => true , autocomplete: :off, :maxlength => 20, id: :title %><br>
+        <%= form.text_area :content , placeholder: :content , autocomplete: :off , :maxlength => 299, id: :content %><br>
+        期限&thinsp;:&thinsp;<%= form.datetime_field :deadline , :required => true , autocomplete: :off, id: :deadline %>
+        チェック&thinsp;:&thinsp;<%= form.check_box :check %>
+        <%= form.submit id: :update_btn %>
+    <% end %>
+</div>
+
+<%= render "errors", obj: @task %>

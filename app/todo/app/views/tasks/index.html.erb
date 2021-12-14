@@ -1,0 +1,52 @@
+<% @page_title ="Todo 一覧"%>
+<h1 id="page_title"><%= @page_title %></h1>
+
+
+
+<div id="create_form">
+	<%= form_tag tasks_path, method: :post do %>
+		<%= text_field_tag "title", "", placeholder: :title, :required => true , autocomplete: :off, :maxlength => 20 %><br>
+		<%= text_area_tag "content", "" , placeholder: :content , autocomplete: :off , :maxlength => 299 %><br>
+		期限&thinsp;:&thinsp;<%= datetime_field_tag "deadline", "" , :required => true , autocomplete: :off %><%= submit_tag "create", id: :create_btn %>
+	<% end %>
+</div>
+
+<%= render "errors", obj: @task %>
+
+<div id="tasks">
+	<div id="task_scroll">
+		<% if @tasks.present? %>
+			<% @tasks.each do |task| %>
+				<div class="task">
+					<% if task.check %>
+						<p class="task_tilte"><del>Title&thinsp;:&thinsp;<%= task.title %></del></p>
+						<p><del><%= task.content %></del></p>
+						<p><del>期限&thinsp;:&thinsp;<%= task.deadline %></del></p>
+						<%= form_tag task_check_path(task.id), method: :post do %>
+							<%= hidden_field_tag :check, "0" %>
+							<%= submit_tag "外す", class: :task_check_btn %>
+						<% end %>
+					<% else %>
+						<p class="task_tilte">Title&thinsp;:&thinsp;<%= task.title %></p>
+						<p><%= task.content %></p>
+						<% if DateTime.now > task.deadline %>
+							<p class="overdue">期限&thinsp;:&thinsp;<%= task.deadline %></p>
+						<% else %>
+							<p>期限&thinsp;:&thinsp;<%= task.deadline %></p>
+						<% end %>
+						<%= form_tag task_check_path(task.id), method: :post do %>
+							<%= hidden_field_tag :check, "1" %>
+							<%= submit_tag "チェック", class: :task_check_btn %>
+						<% end %>
+					<% end %>
+					<%= link_to "編集", [:edit, task], class: :task_edit_btn %>
+					<%= form_tag task_path(task.id), method: :delete do %>
+						<%= submit_tag "削除", class: :task_delete_btn %>
+					<% end %>
+				</div>
+			<% end %>
+		<% else %>
+			<p>Todoがありません</p>
+		<% end %>
+	</div>
+</div>

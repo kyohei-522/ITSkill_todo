@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Todo</title>
+		<%= csrf_meta_tags %>
+		<%= csp_meta_tag %>
+		<% # stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+		<link rel="stylesheet" type="text/css" href="/main.css">
+	</head>
+
+	<body>
+		 <div>
+			<% if current_user %>
+				<p id="sign_in_status"><strong>Signed in as <%= current_user.name %>&thinsp;.&thinsp;<%= link_to "Sign out", signout_path, id: "sign_out" %></strong></p>
+			<% else %>
+				<%= link_to "Sign In with Google", "/auth/google_oauth2", method: :post %>
+			<% end %>
+		</div>
+		<div id="app_container">
+			<%= yield %>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Todo</title>
+		<%= csrf_meta_tags %>
+		<%= csp_meta_tag %>
+		<% # stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+		<link rel="stylesheet" type="text/css" href="main.css">
+	</head>
+
+	<body>
+		 <div>
+			<% if current_user %>
+				Signed in as <strong><%= current_user.name %></strong>!
+				<%= link_to "Sign out", signout_path, id: "sign_out" %>
+			<% end %>
+		</div>
+		<div>
+			<%= yield %>
+		</div>
+	</body>
+</html>

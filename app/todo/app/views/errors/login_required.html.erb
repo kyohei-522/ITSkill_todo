@@ -1,0 +1,5 @@
+<% @page_title = "ログインが必要です" %>
+<div id="login_required">
+	<h1><%= @page_title %></h1>
+	<%= link_to image_tag('/btn_google_signin_light_pressed_web@2x.png', id: :sign_in_img), "/auth/google_oauth2" , method: :post %>
+</div>
